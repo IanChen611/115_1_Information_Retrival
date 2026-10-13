@@ -1,0 +1,8 @@
+target/
+out/
+data/
+*.warc
+*.warc.gz
+.idea/
+*.iml
+.vscode/
