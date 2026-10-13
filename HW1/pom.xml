@@ -15,13 +15,7 @@
     </properties>
 
     <dependencies>
-        <!-- A：讀 WARC 檔（ClueWeb09 為 WARC/0.18，若不相容可改為自行解析並移除此相依） -->
-        <dependency>
-            <groupId>org.netpreserve</groupId>
-            <artifactId>jwarc</artifactId>
-            <version>0.37.0</version>
-        </dependency>
-        <!-- A：去除 HTML 標籤 -->
+        <!-- A：去除 HTML 標籤（WarcReader 使用 org.jsoup.Jsoup） -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
@@ -33,6 +27,13 @@
             <artifactId>lucene-analysis-common</artifactId>
             <version>9.12.3</version>
         </dependency>
+        <!-- 單元測試（只在 mvn test 時使用，不會打包進 hw1.jar） -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.14.4</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -42,6 +43,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
+            </plugin>
+            <!-- 執行 src/test/java 下的 JUnit 測試：mvn test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.6</version>
             </plugin>
             <!-- 打包成含所有相依套件的單一 jar：target/hw1.jar -->
             <plugin>

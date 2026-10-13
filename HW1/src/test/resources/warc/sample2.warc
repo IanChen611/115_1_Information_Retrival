@@ -1,0 +1,27 @@
+WARC/0.18
+WARC-Type: warcinfo
+WARC-Date: 2009-03-65T08:43:19-0800
+WARC-Record-ID: <urn:uuid:0000-info>
+Content-Type: application/warc-fields
+Content-Length: 106
+
+software: Nutch 1.0-dev (modified for clueweb09)
+isPartOf: clueweb09-en
+format: WARC file version 0.18
+
+
+WARC/0.18
+WARC-Type: response
+WARC-Target-URI: http://example.org/second
+WARC-Date: 2009-03-65T08:43:19-0800
+WARC-Record-ID: <urn:uuid:0005>
+WARC-TREC-ID: clueweb09-en0000-01-00000
+Content-Type: application/http;msgtype=response
+Content-Length: 128
+
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Content-Length: 49
+
+<html><body><p>Second file page</p></body></html>
+

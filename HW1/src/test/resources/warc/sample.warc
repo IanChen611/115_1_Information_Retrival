@@ -1,0 +1,73 @@
+WARC/0.18
+WARC-Type: warcinfo
+WARC-Date: 2009-03-65T08:43:19-0800
+WARC-Record-ID: <urn:uuid:0000-info>
+Content-Type: application/warc-fields
+Content-Length: 106
+
+software: Nutch 1.0-dev (modified for clueweb09)
+isPartOf: clueweb09-en
+format: WARC file version 0.18
+
+
+WARC/0.18
+WARC-Type: response
+WARC-Target-URI: http://example.com/hello
+WARC-Date: 2009-03-65T08:43:19-0800
+WARC-Record-ID: <urn:uuid:0001>
+WARC-TREC-ID: clueweb09-en0000-00-00000
+Content-Type: application/http;msgtype=response
+Content-Length: 265
+
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Content-Length: 185
+
+<html><head><title>Hello Page</title><style>body{color:red}</style><script>var hidden = "SCRIPT_TEXT";</script></head><body><h1>Hello World</h1><p>資訊檢索 is fun.</p></body></html>
+
+WARC/0.18
+WARC-Type: request
+WARC-Target-URI: http://example.com/hello
+WARC-Date: 2009-03-65T08:43:19-0800
+WARC-Record-ID: <urn:uuid:0002>
+Content-Type: application/http;msgtype=request
+Content-Length: 42
+
+GET /hello HTTP/1.1
+Host: example.com
+
+
+
+WARC/0.18
+WARC-Type: response
+WARC-Target-URI: http://example.com/image
+WARC-Date: 2009-03-65T08:43:19-0800
+WARC-Record-ID: <urn:uuid:0003>
+WARC-TREC-ID: clueweb09-en0000-00-00001
+Content-Type: application/http;msgtype=response
+Content-Length: 122
+
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Content-Length: 43
+
+<html><body><img src="a.png"></body></html>
+
+WARC/0.18
+WARC-Type: response
+WARC-Target-URI: http://example.com/cafe
+WARC-Date: 2009-03-65T08:43:19-0800
+WARC-Record-ID: <urn:uuid:0004>
+WARC-TREC-ID: clueweb09-en0000-00-00002
+Content-Type: application/http;msgtype=response
+Content-Length: 233
+
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 172
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></head><body><p>caf� menu</p><pre>
+WARC/0.18
+WARC-Type: response
+</pre></body></html>
+

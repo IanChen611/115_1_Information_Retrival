@@ -16,11 +16,29 @@
 
 ## 執行環境與安裝
 - JDK 17 以上、Maven 3.9 以上
-- 相依套件（由 Maven 自動下載）：jwarc、jsoup、lucene-analysis-common
+- 相依套件（由 Maven 自動下載）：jsoup、lucene-analysis-common（測試用：JUnit 5）
+
+## 資料集
+到[這個連結](https://drive.google.com/drive/u/3/folders/1E0bOvsjDMTwakAtN_D250tLcuI7wgCEU)下載資料集，並放在這個位置：
+
+```
+115_1_Information_Retrival/
+└── HW1/
+    ├── data/                  ← 放這裡
+    │   └── xxx.warc.gz
+    ├── out/                   ← 程式輸出的索引會在這裡
+    ├── pom.xml
+    └── src/
+```
+
+> `data/` 與 `out/` 已在 `.gitignore` 中，資料集不會被 commit（單檔約 1GB，超過 GitHub 上限）。
+
+## 編譯與執行
+在 `HW1/` 目錄下執行：
 
 ```
 mvn package
-java -Xmx4g -jar target/hw1.jar --input <file.warc.gz> --output out/ [--casefold] [--stopword] [--stem]
+java -Xmx4g -jar target/hw1.jar --input data/10.warc.gz --output out/ [--casefold] [--stopword] [--stem]
 ```
 
 ## 輸出格式

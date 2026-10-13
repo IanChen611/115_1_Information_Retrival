@@ -3,6 +3,9 @@ out/
 data/
 *.warc
 *.warc.gz
+# 測試用的小型 WARC 檔要進版控
+!src/test/resources/warc/*.warc
+!src/test/resources/warc/*.warc.gz
 .idea/
 *.iml
 .vscode/
