@@ -14,8 +14,8 @@ public interface Indexer {
     /**
      * 加入一篇文件的所有 token。
      *
-     * @param docId  文件編號，呼叫順序保證遞增
-     * @param tokens 依 position 遞增排序的 token，可能為空列表
+     * @param docId  正整數文件編號，呼叫順序保證嚴格遞增，可有間隔
+     * @param tokens 依 position 嚴格遞增排序的 token，可能為空列表；保留停用詞造成的位置空缺
      */
     void addDocument(int docId, List<Token> tokens) throws IOException;
 
