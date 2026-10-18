@@ -45,6 +45,14 @@ mvn package
 java -Xmx4g -jar target/hw1.jar --input data/10.warc.gz --output out/ [--casefold] [--stopword] [--stem]
 ```
 
+使用 Trie 對已建立的索引執行前綴查詢，並輸出所有符合詞彙的 postings：
+
+```
+java -jar target/hw1.jar --index-dir out/ --prefix ${retriev}
+```
+
+查詢會讀取 `dictionary.txt` 建立詞彙 Trie，再依字典序輸出 `postings.txt` 中符合前綴的完整詞項列。空前綴會匹配全部詞彙。
+
 ## 輸出格式
 - `out/dictionary.txt`：`term<TAB>df`，依 term 排序
 - `out/postings.txt`：`term, df: <docId, tf: <pos1, pos2, ...>; ...>`

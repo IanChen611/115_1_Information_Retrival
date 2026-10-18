@@ -1,6 +1,7 @@
 package ir.hw1;
 
 import ir.hw1.index.Indexer;
+import ir.hw1.index.PrefixQuery;
 import ir.hw1.index.PositionalIndexer;
 import ir.hw1.parser.Document;
 import ir.hw1.parser.DocumentSource;
@@ -13,6 +14,7 @@ import ir.hw1.text.TokenizerOptions;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +40,8 @@ public final class Main {
     public static void main(String[] args) throws IOException {
         List<Path> inputs = new ArrayList<>();
         Path output = Path.of("out");
+        Path indexDirectory = null;
+        String prefix = null;
         boolean caseFolding = false;
         boolean removeStopwords = false;
         boolean stemming = false;
@@ -46,6 +50,8 @@ public final class Main {
             switch (args[i]) {
                 case "--input" -> inputs.add(Path.of(requireValue(args, ++i)));
                 case "--output" -> output = Path.of(requireValue(args, ++i));
+                case "--index-dir" -> indexDirectory = Path.of(requireValue(args, ++i));
+                case "--prefix" -> prefix = requireValue(args, ++i);
                 case "--casefold" -> caseFolding = true;
                 case "--stopword" -> removeStopwords = true;
                 case "--stem" -> stemming = true;
@@ -55,6 +61,16 @@ public final class Main {
                     System.exit(1);
                 }
             }
+        }
+        if (indexDirectory != null || prefix != null) {
+            if (indexDirectory == null || prefix == null || !inputs.isEmpty()) {
+                printUsage();
+                System.exit(1);
+            }
+            OutputStreamWriter result = new OutputStreamWriter(System.out, StandardCharsets.UTF_8);
+            PrefixQuery.writeMatches(indexDirectory, prefix, result);
+            result.flush();
+            return;
         }
         if (inputs.isEmpty()) {
             printUsage();
@@ -103,6 +119,7 @@ public final class Main {
     private static void printUsage() {
         System.err.println("""
                 Usage: java -jar hw1.jar --input <file.warc.gz> [--input ...] [--output <dir>]
-                                         [--casefold] [--stopword] [--stem]""");
+                                         [--casefold] [--stopword] [--stem]
+                       java -jar hw1.jar --index-dir <dir> --prefix <prefix>""");
     }
 }
