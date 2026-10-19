@@ -18,7 +18,7 @@
    - 過濾非 `response` 紀錄、去除 HTTP Headers，並以 Jsoup 萃取乾淨 HTML body 本文，自動過濾 `<script>` 與 `<style>` 標籤。
    - 輸出文件對照表 `docs.txt`（紀錄內部 `docId`、`TREC-ID` 與原始 `URL`）。
 2. **標準位置倒排索引（Positional Inverted Index）**：
-   - 依據教科書標準格式，為每個詞彙紀錄 Document Frequency ($df$)、各文件的 Term Frequency ($tf$) 以及出現之精準字詞位置 ($pos$)。
+   - 依據教科書標準格式，為每個詞彙紀錄 Document Frequency (`df`)、各文件的 Term Frequency (`tf`) 以及出現之精準字詞位置 (`pos`)。
    - 支援後續片語查詢（Phrase Query）與鄰近搜尋（Proximity Search）。
 3. **外部記憶體分批索引與多路合併（SPIMI / BSBI 架構）**：
    - 為避免 1GB 語料在單機建置時發生記憶體不足（Out-Of-Memory, OOM），設計以 128 MiB 為門檻之二進位中介區塊（`IndexBlock`）。
@@ -35,7 +35,7 @@
 
 斷詞由組員 B 實作、組員 D 整合驗證，採用基於 Lucene 的標準斷詞處理流程：
 1. **處理流程順序**：
-   $$\text{原始文字} \longrightarrow \text{切詞 (Tokenize)} \longrightarrow \text{Case Folding} \longrightarrow \text{Stopword Removal} \longrightarrow \text{Stemming}$$
+   > `原始文字` ➔ `切詞 (Tokenize)` ➔ `大小寫轉換 (Case Folding)` ➔ `停用詞過濾 (Stopword Removal)` ➔ `詞幹提取 (Stemming)`
 2. **斷詞與標點規則**：
    - **空白與標點分隔**：依空格、換行及常見標點符號（如逗號、句號、驚嘆號等）斷詞。
    - **保留詞內特殊標點**：智慧保留特定語意符號，例如單字縮寫撇號（`it's`、`don't`）或連字號。
@@ -61,10 +61,10 @@
 
 3. **斷詞管線順序與字詞位置（Position）編號保留**：
    - **困難**：在支援大小寫轉換、停用詞過濾與詞幹提取（Porter Stemming）的多種參數組合下，若先過濾停用詞再計算 Token 位置，會導致詞彙間隔資訊遺失，使後續的片語查詢（Phrase Query）與鄰近搜尋無法正確判定相鄰距離；且若先進行詞幹提取再過濾停用詞，會因字根變化而漏過濾停用詞。
-   - **解決**：團隊制定了嚴謹的語言前處理管線順序：$\text{切詞} \to \text{Case Folding} \to \text{Stopword Filtering} \to \text{Stemming}$。在切詞當下即綁定全局累計的位置序號，即使該詞被停用詞表剔除，後續詞項依然保留原始空缺的位置編號（例如 `go to bed` 移除 `to` 後保留 `go:1`, `bed:3`），完美兼顧語言過濾與位置精確度。
+   - **解決**：團隊制定了嚴謹的語言前處理管線順序：`切詞` ➔ `Case Folding` ➔ `Stopword Filtering` ➔ `Stemming`。在切詞當下即綁定全局累計的位置序號，即使該詞被停用詞表剔除，後續詞項依然保留原始空缺的位置編號（例如 `go to bed` 移除 `to` 後保留 `go:1`, `bed:3`），完美兼顧語言過濾與位置精確度。
 
 4. **多參數組合下的索引正確性驗證與品質把關**：
-   - **困難**：正式資料產出的詞項高達 73 萬個、倒排清單超過 300 MB，單靠人工肉眼抽查極難驗證 $df$、$tf$、位置編號是否絕對嚴格遞增，也難以第一時間抓出多模組整合時的邊界條件錯誤。
+   - **困難**：正式資料產出的詞項高達 73 萬個、倒排清單超過 300 MB，單靠人工肉眼抽查極難驗證 df、tf、位置編號是否絕對嚴格遞增，也難以第一時間抓出多模組整合時的邊界條件錯誤。
    - **解決**：小組自製微型代表性語料庫（4 篇測試文本），嚴格手算出多種參數組合下的標準答案（Ground Truth）；並開發自動化審計比對腳本（`verify.py` 與 `audit.py`），對輸出成果的語法格式、字典序遞增、數值一致性進行全面驗證，確保上傳與 Demo 前所有規格 100% 吻合教授要求。
 
 ---
