@@ -1,7 +1,14 @@
 package ir.hw1.text;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 停用詞表。（負責：D）
@@ -14,34 +21,54 @@ import java.util.List;
  */
 public class StopwordList {
 
-    private static StopwordList instance;
-    private final List<String> stopwords;
+    private static volatile StopwordList instance;
+    private final Set<String> stopwords;
 
-    private StopwordList(List<String> stopwords) {
-        this.stopwords = stopwords;
+    private StopwordList(Set<String> stopwords) {
+        this.stopwords = Collections.unmodifiableSet(stopwords);
     }
 
     /** 讀入 resources/stopwords.txt。 */
     public static StopwordList loadDefault() {
-        List<String> stopwords =  new ArrayList<>();
-
-        // TODO(D) 讀取檔案內容存入 List<String> stopwords
-        stopwords.add("to");
-
         if (instance == null) {
-            instance = new StopwordList(stopwords); // 內部可以呼叫 private 建構子
+            synchronized (StopwordList.class) {
+                if (instance == null) {
+                    Set<String> words = new HashSet<>();
+                    try (InputStream in = StopwordList.class.getResourceAsStream("/stopwords.txt")) {
+                        if (in == null) {
+                            throw new IllegalStateException("Resource /stopwords.txt not found on classpath");
+                        }
+                        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                line = line.trim();
+                                if (line.isEmpty() || line.startsWith("#")) {
+                                    continue;
+                                }
+                                words.add(line.toLowerCase());
+                            }
+                        }
+                    } catch (IOException e) {
+                        throw new UncheckedIOException("Failed to read stopwords.txt", e);
+                    }
+                    instance = new StopwordList(words);
+                }
+            }
         }
         return instance;
     }
 
     /** word 是否為停用詞（不分大小寫）。 */
     public boolean contains(String word) {
-        return stopwords.contains(word);
+        if (word == null) {
+            return false;
+        }
+        return stopwords.contains(word.toLowerCase());
     }
 
     /** 停用詞數量。 */
     public int size() {
-        // TODO(D)
-        throw new UnsupportedOperationException("TODO(D): StopwordList.size");
+        return stopwords.size();
     }
 }
+

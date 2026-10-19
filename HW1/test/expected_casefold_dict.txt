@@ -1,0 +1,9 @@
+and	1
+are	1
+fun	2
+information	3
+is	1
+models	1
+retrieval	4
+search	3
+systems	1

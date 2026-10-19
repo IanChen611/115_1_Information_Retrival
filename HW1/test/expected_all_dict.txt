@@ -1,0 +1,6 @@
+fun	2
+inform	3
+model	1
+retriev	4
+search	3
+system	1

@@ -1,5 +1,7 @@
 target/
 out/
+out_*/
+out*/
 data/
 *.warc
 *.warc.gz
