@@ -1,0 +1,20 @@
+# 單一關鍵字
+Microsoft
+airplanes
+# 自由文字
+United States government
+non-profit organization
+Hong Kong business
+# 簡單布林查詢
+open source AND Linux
+software engineer OR project manager
+# 加分：完整布林運算
+(linux OR windows) AND server AND NOT microsoft
+# 加分：片語、鄰近
+"hong kong"
+"united states government"
+search /3 engine
+# 加分：前綴萬用字元
+retriev*
+# 加分：拼字校正
+microsfot airplnae
