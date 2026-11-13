@@ -129,4 +129,4 @@ cmd> Hong Kong business
 - `results/queries.txt`：範例查詢（涵蓋投影片中的例子與各加分功能）。
 - `results/results.txt`：上述查詢的排序結果。
 - `docId` 對應 `index/docs.txt`（`docId <TAB> TREC-ID <TAB> URL`）。
-- 完整索引（`index/`，約 270 MB）超過繳交大小限制，放在雲端硬碟：<雲端連結>。下載後解壓縮到 `HW2/index/`，即可跳過建索引步驟直接查詢。
+- 完整索引（`index/`，約 270 MB）超過繳交大小限制，放在雲端硬碟：<https://drive.google.com/drive/folders/16wDsj-WwjpTC-BbD_5Zee-WmF-3ffpgJ?usp=sharing>。下載後解壓縮到 `HW2/index/`，即可跳過建索引步驟直接查詢。
