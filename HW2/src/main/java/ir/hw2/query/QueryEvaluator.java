@@ -76,7 +76,7 @@ public final class QueryEvaluator {
         }
     }
 
-    /** 前綴展開：重用 HW1 Trie；過多時只留 df 最高的 {@link #MAX_PREFIX_EXPANSION} 個。 */
+    /** 前綴展開：在排序詞典上取前綴區間；過多時只留 df 最高的 {@link #MAX_PREFIX_EXPANSION} 個。 */
     public List<String> expand(String prefix) {
         List<String> terms = index.termsWithPrefix(prefix);
         if (terms.size() <= MAX_PREFIX_EXPANSION) {

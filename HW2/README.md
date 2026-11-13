@@ -4,10 +4,10 @@
 
 | 姓名 | 學號 | 負責部分 | 主要職責與模組 | 分工比重 |
 |:---|:---|:---|:---|:---|
-|  |  | **工作一** 搜尋索引與 I/O | `SearchIndexBuilder`、`IndexReader`、`PostingList`、`SearchEngine`、`Main`（`index` / `search` 子命令）、Tokenizer 處理順序修正 | 25% |
-|  |  | **工作二** 查詢解析與布林／位置查詢 | `QueryParser`、`QueryNode`、`QueryEvaluator`（AND / OR / NOT / 括號、片語、鄰近） | 25% |
-|  |  | **工作三** 排序與權重 | `Weighting`、`Ranker`（TF-IDF 餘弦、lnc.ltc、BM25、top-k heap、champion list） | 25% |
-|  |  | **工作四** 查詢擴充、測試與文件 | 前綴萬用字元、`SpellCorrector`、JUnit 測試、`results/` 輸出、說明文件 | 25% |
+| 杜詠霖 | 112820042 | **工作一** 搜尋索引與 I/O | 延續 HW1 的位置索引：`SearchIndexBuilder`（lexicon 位移、文件向量長度、champion list）、`IndexReader`、`PostingList`、`SearchEngine`、`Main`（`index` / `search` 子命令） | 25% |
+| 陳翊揚 | 112820025 | **工作二** 查詢解析與布林／位置查詢 | `QueryParser`、`QueryNode`、`QueryEvaluator`（AND / OR / NOT / 括號、片語、鄰近）；AND 交集沿用 HW1 的 `SkipList` | 25% |
+| 辛政隆 | 112820003 | **工作三** 排序與權重 | `Weighting`、`Ranker`（TF-IDF 餘弦、lnc.ltc、BM25、top-k heap、champion list 計分）；延續 HW1 的 Tokenizer，修正停用詞與 stemming 的處理順序 | 25% |
+| 陳昱霖 | 112820030 | **工作四** 查詢擴充、測試與文件 | 前綴萬用字元、`SpellCorrector`、JUnit 測試、`results/` 輸出、說明文件、打包繳交 | 25% |
 
 ---
 
@@ -20,7 +20,7 @@
 5. **加分功能**：
    - **完整布林運算**：`NOT`、括號、任意組合，優先序 `NOT > AND > OR`；AND 交集使用 HW1 的 `SkipList`。
    - **片語與鄰近查詢**：`"hong kong"`、`search /3 engine`，使用 HW1 索引的位置資訊。
-   - **前綴萬用字元**：`retriev*`，重用 HW1 的 `Trie`。
+   - **前綴萬用字元**：`retriev*`，在已排序的詞典上二分搜尋出前綴區間（不必額外建 Trie，省下數百 MB 記憶體）。
    - **拼字校正**：查詢詞不在詞典時，以 Damerau-Levenshtein 編輯距離找最接近、df 最高的詞並提示（`microsfot` → `microsoft`）。
    - **多種權重**：`--weighting tfidf | lnc.ltc | bm25`。
    - **非精確 top-k**：`--champion` 只讀每個詞 tf 最高的 50 篇（champion list）；精確模式以 heap 取前 k 名。
@@ -129,3 +129,4 @@ cmd> Hong Kong business
 - `results/queries.txt`：範例查詢（涵蓋投影片中的例子與各加分功能）。
 - `results/results.txt`：上述查詢的排序結果。
 - `docId` 對應 `index/docs.txt`（`docId <TAB> TREC-ID <TAB> URL`）。
+- 完整索引（`index/`，約 270 MB）超過繳交大小限制，放在雲端硬碟：<雲端連結>。下載後解壓縮到 `HW2/index/`，即可跳過建索引步驟直接查詢。

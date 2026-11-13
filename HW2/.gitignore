@@ -11,5 +11,5 @@ data/
 .idea/
 *.iml
 .vscode/
-index/
-index_*/
+/index/
+/index_*/
